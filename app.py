@@ -1,5 +1,6 @@
 from flask import Flask
 from api.test import test_bp
+from api.auth import auth
 
 
 app = Flask(__name__)

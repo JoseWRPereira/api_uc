@@ -1,6 +1,7 @@
 from flask import Blueprint
 from flask import request, json
 from flask_restful import Resource, Api
+from api.auth import auth
 
 test_bp = Blueprint('test_bp',__name__)
 api = Api(test_bp)
@@ -17,6 +18,7 @@ equipe = [
 ]
 
 class Equipe(Resource):
+    @auth.login_required
     def get(self):
         return equipe
 
@@ -28,6 +30,7 @@ class Equipe(Resource):
         return equipe[posicao]
 
 class EquipeUser(Resource):
+    @auth.login_required
     def get(self, id):
         try:
             response = equipe[id]
