@@ -27,7 +27,34 @@ class Equipe(Resource):
         equipe.append(dados)
         return equipe[posicao]
 
+class EquipeUser(Resource):
+    def get(self, id):
+        try:
+            response = equipe[id]
+        except IndexError:
+            mensagem = "Tarefa com ID {} não existe!".format(id)
+            response = {"status": "erro", "mensagem": mensagem }
+        except Exception:
+            mensagem = "Erro desconhecido. Procure o administrador da API!"
+            response = {"status": "erro", "mensagem": mensagem }
+        return response
+
+    def put(self, id):
+        dados = json.loads(request.data)
+        equipe[id] = dados
+        return dados
+    
+    def delete(self, id):
+        equipe.pop(id)
+        return {'status':'Sucesso', 'mensagem':'Registro excluído'}
+
+
+
+
+
+
 api.add_resource(Equipe,'/equipe')
+api.add_resource(EquipeUser,'/equipe/<int:id>')
 
 @test_bp.route('/api')
 def api():
